@@ -1,6 +1,7 @@
 /**
  * Módulo de Descuentos.
- * Lo usan otros módulos del sistema (por ejemplo, Facturación).
+ * SOLUCIÓN CORRECTA: se mantiene el contrato original (0-100) que usa Facturación
+ * y se agrega una función NUEVA para Reportes. Nadie que dependa del módulo se rompe.
  *
  * @param monto      Monto base (no puede ser negativo).
  * @param porcentaje Descuento entre 0 y 100 (10 = 10%).
@@ -13,4 +14,16 @@ export function aplicarDescuento(monto: number, porcentaje: number): number {
     throw new Error('Porcentaje inválido');
   }
   return monto - (monto * porcentaje) / 100;
+}
+
+/**
+ * Nueva función para el módulo de Reportes: recibe el descuento como fracción.
+ *
+ * @param fraccion Descuento entre 0 y 1 (0.10 = 10%).
+ */
+export function aplicarDescuentoFraccion(monto: number, fraccion: number): number {
+  if (fraccion < 0 || fraccion > 1) {
+    throw new Error('Fracción inválida');
+  }
+  return aplicarDescuento(monto, fraccion * 100);
 }
